@@ -1,0 +1,100 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "Protos.RestsAndCities";
+
+service RestsAndCitiesService
+{
+  rpc GetCitiesList (google.protobuf.Empty) returns (GetCitiesListResponse);
+  rpc GetRestaurantListByCity (GetRestaurantListByCityRequest) returns (GetRestaurantListByCityResponse);
+  rpc AddCity (AddCityRequest) returns (AddCityResponse);
+  rpc RemoveCity (RemoveCityRequest) returns (RemoveCityResponse);
+  rpc EditCity (EditCityRequest) returns (EditCityResponse);
+  rpc AddRestaurant (AddRestaurantRequest) returns (AddRestaurantResponse);
+  rpc RemoveRestaurant (RemoveRestaurantRequest) returns (RemoveRestaurantResponse);
+  rpc EditRestaurant (EditRestaurantRequest) returns (EditRestaurantResponse);
+}
+
+message CityModel {
+  uint64 id = 1;
+  string name = 2;
+}
+
+message RestaurantModel {
+  uint64 id = 1;
+  uint64 city_id = 2;
+  string name = 3;
+}
+
+message GetRestaurantListByCityRequest {
+  uint64 city_id = 1;
+  string sort_by = 2;
+  bool descending = 3;
+  int32 page_number = 4;
+  int32 elements_per_page = 5;
+  string filter = 6;
+  bool IsCenterLocation = 7;
+}
+
+message AddCityRequest {
+  string city_name = 1;
+}
+
+message RemoveCityRequest {
+  uint64 city_id = 1;
+}
+
+message EditCityRequest {
+  uint64 city_id = 1;
+  string new_city_name = 2;
+}
+
+message AddRestaurantRequest {
+  uint64 city_id = 1;
+  string restaurant_name = 2;
+}
+
+message RemoveRestaurantRequest {
+  uint64 restaurant_id = 1;
+}
+
+message EditRestaurantRequest {
+  uint64 restaurant_id = 1;
+  string new_restaurant_name = 2;
+}
+
+message GetCitiesListResponse {
+  repeated CityModel models = 1;
+}
+
+message GetRestaurantListByCityResponse {
+  int32 page_number = 1;
+  int32 elements_per_page = 2;
+  int32 total_elements = 3;
+  repeated RestaurantModel restaurant_models = 4;
+}
+
+message AddCityResponse {
+  bool result = 1;
+}
+
+message RemoveCityResponse {
+  bool result = 1;
+}
+
+message EditCityResponse {
+  bool result = 1;
+}
+
+message AddRestaurantResponse {
+  bool result = 1;
+}
+
+message RemoveRestaurantResponse {
+  bool result = 1;
+}
+
+message EditRestaurantResponse {
+  bool result = 1;
+}
